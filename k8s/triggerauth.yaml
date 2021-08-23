@@ -1,0 +1,9 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: queue-trigger-auth
+spec:
+  secretTargetRef: 
+  - parameter: stbtpcorekedaqueue_STORAGE
+    name: secretforqueuefunction
+    key: stbtpcorekedaqueue_STORAGE

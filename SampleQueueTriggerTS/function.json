@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "funconkyma",
+      "connection": "stbtpcorekedaqueue_STORAGE"
+    }
+  ],
+  "scriptFile": "../dist/SampleQueueTriggerTS/index.js"
+}

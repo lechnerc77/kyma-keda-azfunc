@@ -1,0 +1,16 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: azure-queue-scaledobject
+spec:
+  scaleTargetRef:
+    name: queue-function
+  cooldownPeriod:   60
+  triggers:
+  - type: azure-queue
+    authenticationRef:
+      name: queue-trigger-auth
+    metadata:
+      queueName: funconkyma
+      connectionFromEnv: stbtpcorekedaqueue_STORAGE
+      queueLength: "3"

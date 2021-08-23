@@ -1,0 +1,18 @@
+# Just to check that Function worker is running for queue
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  name: queue-function
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  rules:
+    - path: /.*
+      accessStrategies:
+        - handler: noop
+          config: {}
+      methods:
+        - GET
+  service:
+    host: queue-function
+    name: queue-function
+    port: 80

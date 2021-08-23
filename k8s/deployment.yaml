@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-function
+  labels:
+    app: queue-function
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queue-function
+  template:
+    metadata:
+      labels:
+        app: queue-function
+    spec:
+      containers:
+        - image: <Your Docker Account>/simple-queue-azfunc:0.0.1
+          name: queue-function
+          ports:
+          - containerPort: 80
+          env:
+            - name: AzureWebJobsStorage
+              valueFrom:
+                secretKeyRef:
+                  key: AzureWebJobsStorage
+                  name: secretforqueuefunction
+            - name: stbtpcorekedaqueue_STORAGE
+              valueFrom:
+                secretKeyRef:
+                  key: stbtpcorekedaqueue_STORAGE
+                  name: secretforqueuefunction    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: queue-function
+  labels:
+    app: queue-function
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: queue-function
+  type: ClusterIP
+status:
+  loadBalancer: {}
